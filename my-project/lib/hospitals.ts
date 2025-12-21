@@ -1,7 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 
 export interface Hospital {
+  id: string;
   순번: number;
   구분: string;
   의료기관명: string;
@@ -45,15 +47,20 @@ export async function getAllHospitals(): Promise<Hospital[]> {
 
         const hospitalsWithDistrict = rawHospitals
           .filter(h => h && (h.의료기관명 || h.이름)) // Filter out invalid entries
-          .map(h => ({
-            순번: h.순번 || 0,
-            구분: h.구분 || h.업종 || h.의료기관종별 || "",
-            의료기관명: h.의료기관명 || h.이름 || "",
-            "의료기관주소(도로명)": h["의료기관주소(도로명)"] || h.주소 || "",
-            의료기관전화번호: h.의료기관전화번호 || h.전화번호 || "",
-            진료과목: h.진료과목 || "",
-            district 
-          })) as Hospital[];
+          .map(h => {
+            const name = h.의료기관명 || h.이름 || "";
+            const id = crypto.createHash('sha256').update(name + (district || "")).digest('hex').substring(0, 12);
+            return {
+              id,
+              순번: h.순번 || 0,
+              구분: h.구분 || h.업종 || h.의료기관종별 || "",
+              의료기관명: name,
+              "의료기관주소(도로명)": h["의료기관주소(도로명)"] || h.주소 || "",
+              의료기관전화번호: h.의료기관전화번호 || h.전화번호 || "",
+              진료과목: h.진료과목 || "",
+              district 
+            };
+          }) as Hospital[];
         allHospitals.push(...hospitalsWithDistrict);
       } catch (error) {
         console.error(`Error parsing ${fileName}:`, error);
@@ -62,6 +69,11 @@ export async function getAllHospitals(): Promise<Hospital[]> {
   }
 
   return allHospitals;
+}
+
+export async function getHospitalById(id: string): Promise<Hospital | undefined> {
+  const hospitals = await getAllHospitals();
+  return hospitals.find(h => h.id === id);
 }
 
 export async function getHospitalByName(name: string): Promise<Hospital | undefined> {

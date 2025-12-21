@@ -169,52 +169,56 @@ export default function DashboardPage() {
                     {/* Bar Chart */}
                     <div className="flex-1 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 min-h-[400px]">
                       <h4 className="text-lg font-semibold mb-4 text-center text-[#0d171b] dark:text-slate-50">진료과목별 병원 수</h4>
-                      <ResponsiveContainer width="100%" height="90%">
-                        <BarChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 70 }}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis 
-                            dataKey="name" 
-                            angle={-90} 
-                            textAnchor="end" 
-                            interval={0} 
-                            height={70} 
-                            tick={{ fontSize: 12 }} 
-                          />
-                          <YAxis />
-                          <Tooltip content={<CustomTooltip />} />
-                          <Bar dataKey="value" name="병원 수" fill="#8884d8">
-                            {chartData.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                          </Bar>
-                        </BarChart>
-                      </ResponsiveContainer>
+                      <div style={{ width: '100%', height: '90%', minHeight: '300px' }}>
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 70 }}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis 
+                              dataKey="name" 
+                              angle={-90} 
+                              textAnchor="end" 
+                              interval={0} 
+                              height={70} 
+                              tick={{ fontSize: 12 }} 
+                            />
+                            <YAxis />
+                            <Tooltip content={<CustomTooltip />} />
+                            <Bar dataKey="value" name="병원 수" fill="#8884d8">
+                              {chartData.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                              ))}
+                            </Bar>
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
                     </div>
 
                     {/* Pie Chart */}
                     <div className="flex-1 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 min-h-[400px]">
                       <h4 className="text-lg font-semibold mb-4 text-center text-[#0d171b] dark:text-slate-50">진료과목 분포</h4>
-                      <ResponsiveContainer width="100%" height="90%">
-                        <PieChart>
-                          <Pie
-                            data={chartData}
-                            cx="50%"
-                            cy="50%"
-                            labelLine={false}
-                            label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
-                            outerRadius={120}
-                            fill="#8884d8"
-                            dataKey="value"
-                          >
-                            {chartData.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                          </Pie>
-                          <Tooltip 
-                             contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.9)', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                          />
-                        </PieChart>
-                      </ResponsiveContainer>
+                      <div style={{ width: '100%', height: '90%', minHeight: '300px' }}>
+                        <ResponsiveContainer width="100%" height="100%">
+                          <PieChart>
+                            <Pie
+                              data={chartData}
+                              cx="50%"
+                              cy="50%"
+                              labelLine={false}
+                              label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
+                              outerRadius={120}
+                              fill="#8884d8"
+                              dataKey="value"
+                            >
+                              {chartData.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                              ))}
+                            </Pie>
+                            <Tooltip 
+                               contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.9)', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                            />
+                          </PieChart>
+                        </ResponsiveContainer>
+                      </div>
                     </div>
                   </div>
                 )}

@@ -1,4 +1,4 @@
-import { getAllHospitals, getHospitalByName } from "@/lib/hospitals";
+import { getAllHospitals, getHospitalById } from "@/lib/hospitals";
 import SiteHeader from "@/components/SiteHeader";
 import type { NavItem } from "@/components/NavBar";
 import Button from "@/components/ui/Button";
@@ -19,13 +19,13 @@ interface PageProps {
 export async function generateStaticParams() {
   const hospitals = await getAllHospitals();
   return hospitals.map((hospital) => ({
-    id: encodeURIComponent(hospital.의료기관명),
+    id: hospital.id,
   }));
 }
 
 export default async function HospitalDetailPage({ params }: PageProps) {
   const { id } = await params;
-  const hospital = await getHospitalByName(id);
+  const hospital = await getHospitalById(id);
 
   if (!hospital) {
     notFound();

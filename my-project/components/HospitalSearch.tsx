@@ -7,6 +7,7 @@ import Card from "@/components/ui/Card";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface Hospital {
+  id: string;
   순번: number;
   구분: string;
   의료기관명: string;
@@ -91,14 +92,14 @@ export default function HospitalSearch({ hospitals }: HospitalSearchProps) {
     };
   }, [wrapperRef]);
 
-  const handleSuggestionClick = (hospitalName: string) => {
-    router.push(`/hospitals/${encodeURIComponent(hospitalName)}`);
+  const handleSuggestionClick = (hospitalId: string) => {
+    router.push(`/hospitals/${hospitalId}`);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       if (suggestions.length > 0) {
-        handleSuggestionClick(suggestions[0].의료기관명);
+        handleSuggestionClick(suggestions[0].id);
       }
     }
   };
@@ -127,8 +128,8 @@ export default function HospitalSearch({ hospitals }: HospitalSearchProps) {
             <ul>
               {suggestions.map((hospital, index) => (
                 <li 
-                  key={`${hospital.의료기관명}-${index}`}
-                  onClick={() => handleSuggestionClick(hospital.의료기관명)}
+                  key={`${hospital.id}-${index}`}
+                  onClick={() => handleSuggestionClick(hospital.id)}
                   className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer flex items-center justify-between border-b border-slate-100 dark:border-slate-700/50 last:border-0"
                 >
                   <div className="flex items-center gap-3">
@@ -182,13 +183,13 @@ export default function HospitalSearch({ hospitals }: HospitalSearchProps) {
       <div className="space-y-4 mt-12">
         {filteredResults.map((hospital, index) => (
           <Card 
-            key={`${hospital.의료기관명}-${index}`} 
+            key={`${hospital.id}-${index}`} 
             className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:shadow-md transition-shadow cursor-pointer bg-slate-100 dark:bg-slate-800 border-none"
             padding="md"
           >
             <div 
               className="flex-1 cursor-pointer"
-              onClick={() => router.push(`/hospitals/${encodeURIComponent(hospital.의료기관명)}`)}
+              onClick={() => router.push(`/hospitals/${hospital.id}`)}
             >
               <div className="flex items-center gap-3 mb-1">
                 <h3 className="text-lg font-bold text-[#0d171b] dark:text-slate-50 hover:text-primary transition-colors">
@@ -212,7 +213,7 @@ export default function HospitalSearch({ hospitals }: HospitalSearchProps) {
               </div>
             </div>
             <Button 
-              onClick={() => router.push(`/hospitals/${encodeURIComponent(hospital.의료기관명)}`)}
+              onClick={() => router.push(`/hospitals/${hospital.id}`)}
               variant="outline" 
               size="sm"
             >
