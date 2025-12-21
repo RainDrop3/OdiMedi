@@ -1,5 +1,9 @@
 # 프로젝트 명세서: 증상 기반 병원 추천 서비스
 
+github주소: https://github.com/RainDrop3/OdiMedi
+
+github page 주소: https://raindrop3.github.io/OdiMedi/
+
 ## 1. 프로젝트 개요 (Overview)
 * **프로젝트명**: OdiMedi
 * **목적**: 사용자가 자신의 증상을 선택하면, 원하는 지역구별로  적절한 병원을 추천하는 웹 서비스입니다.
