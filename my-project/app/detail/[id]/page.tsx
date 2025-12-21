@@ -20,7 +20,7 @@ export async function generateStaticParams() {
     id: encodeURIComponent(symptom.id),
   }));
 }
-
+//asdfasdf
 export default async function SymptomDetailPage({ params }: PageProps) {
   const { id } = await params;
   const symptom = getSymptomById(id);
