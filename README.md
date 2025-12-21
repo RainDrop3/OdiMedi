@@ -1,8 +1,8 @@
-# 프로젝트 명세서: 증상 및 예방접종 기반 병원 추천 서비스
+# 프로젝트 명세서: 증상 기반 병원 추천 서비스
 
 ## 1. 프로젝트 개요 (Overview)
-* **프로젝트명**: (가칭) FindHospital
-* **목적**: 사용자가 자신의 증상이나 필요한 예방접종을 선택하면, 현재 위치와 시간을 고려하여 적절한 병원을 추천하고 관련 의학 정보를 제공하는 웹 서비스입니다.
+* **프로젝트명**: OdiMedi
+* **목적**: 사용자가 자신의 증상을 선택하면, 원하는 지역구별로  적절한 병원을 추천하는 웹 서비스입니다.
 * **핵심 가치**: 복잡한 검색 과정 없이, 직관적인 체크박스 선택만으로 내 주변의 진료 가능한 병원을 시각화된 정보와 함께 빠르게 탐색할 수 있습니다.
 
 ---
@@ -28,11 +28,11 @@
 
 | 구분 | 기술 / 도구 | 비고 |
 | :--- | :--- | :--- |
-| **Framework** | **Next.js 14+ (App Router)** | React 기반 웹 프레임워크 |
+| **Framework** | **Next.js** | React 기반 웹 프레임워크 |
 | **Language** | **TypeScript** | 정적 타입 지원으로 안정성 확보 |
-| **Styling** | **Tailwind CSS** | 유틸리티 퍼스트 CSS 및 다크모드 구현 |
-| **Design** | **Stitch (Google)** | UI/UX 프로토타이핑 및 디자인 |
-| **Visualization** | **Recharts** (또는 Chart.js) | 데이터 시각화 라이브러리 |
+| **Styling** | **Tailwind CSS** | 유틸리티 퍼스트 CSS  |
+| **Design** | **Google Stitch** | UI/UX 프로토타이핑 및 디자인 |
+| **Visualization** | **Recharts** | 데이터 시각화 라이브러리 |
 | **Comment** | **Giscus** | Github Discussions 기반 무설치 댓글 시스템 |
 | **Deployment** | **Github Pages** | 정적 호스팅 서비스 |
 
@@ -41,58 +41,70 @@
 ## 4. 페이지별 상세 기능 명세
 
 ### 0. 공통 레이아웃 (Layout)
-* **Header**: 서비스 로고 (Home 링크), 네비게이션 메뉴(`[병원정보]`, `[내 주변]`, `[상세증상]`, `[소개]`), 다크모드 토글 스위치.
-* **Footer**: 저작권 표시, 팀 정보, Github 저장소 링크.
+* **Header**: 서비스 로고 (Home 링크), 네비게이션 메뉴(`[병원정보]`, `[내 주변]`, `[상세증상]`, `[소개]`).
+* **Footer**: 저작권 표시, 서비스 소개 링크.
 
-### 1. 메인 페이지 (`app/page.tsx`)
-* **검색 섹션**: 증상(복수 선택) 및 예방접종(단일 선택) 탭을 통한 체크박스 UI 제공. 선택에 따른 병원 리스트 실시간 필터링.
-* **뉴스 섹션**: 질병, 보건 관련 최신 뉴스 데이터를 카드 형태로 나열.
+### 1. 메인 페이지 (`app/index/page.tsx`)
+* **증상 선택 섹션**: "현재 증상을 입력하세요" 문구와 함께 주요 증상을 선택할 수 있는 UI 제공.
+* **기능**: 증상 선택 시 관련 진료과를 추천하고, 해당 진료과 병원 찾기 페이지로 이동 가능.
 
-### 2. 병원 상세 정보 (`app/hospitals/[id]/page.tsx`)
-* **정보 제공**: 병원 기본 정보(이름, 주소, 시간, 진료과) 표시 및 지도 링크 연동.
+### 2. 병원 정보 (`app/hospitals/page.tsx` & `app/hospitals/[id]/page.tsx`)
+* **병원 목록**: 전체 병원 목록을 보여주며, 병원명 검색 및 지역구 필터링 기능 제공.
+* **상세 정보**: 병원 기본 정보(이름, 주소, 전화번호, 진료과) 및 지역구 표시.
 * **소통**: Giscus를 활용한 방문자 후기 및 문의 댓글 기능.
 
 ### 3. 내 주변 / 대시보드 (`app/dashboard/page.tsx`)
-* **필터링**: 사용자 입력(Select Box)을 통한 지역구 선택 기능.
+* **지역 선택**: 사이드바에서 부산광역시 내 구/군 선택 가능.
 * **시각화**:
-    * 지역 내 진료과별 병원 분포 (Pie Chart)
-    * 예방접종별 시행 병원 수 비교 (Bar Chart)
-* **UX**: 데이터 로딩 시 스켈레톤 UI, 에러 발생 시 안내 화면 제공.
+    * 지역 내 진료과별 병원 수 (Bar Chart)
+    * 진료과별 분포 비율 (Pie Chart)
+* **인터랙션**: 차트 툴팁을 통해 상세 수치 확인 가능.
 
-### 4. 상세 증상 및 백신 정보 (`app/detail/[id]/page.tsx`)
-* **SSG**: 빌드 시점에 생성된 정적 페이지로 빠른 로딩 속도 제공.
-* **내용**: 증상별 자가 진단 팁, 관련 진료과 안내, 백신 효능 및 주의사항 표시.
+### 4. 상세 증상 (`app/detail/page.tsx` & `app/detail/[id]/page.tsx`)
+* **증상 검색**: 궁금한 증상을 키워드로 검색하여 상세 정보를 찾을 수 있음.
+* **상세 내용**: 증상 설명, 주 발병 대상, 발병 시기, 관련 질환 정보 제공.
+* **연동**: 해당 증상을 진료하는 진료과 병원 찾기 버튼 제공.
 
 ### 5. 소개 (`app/about/page.tsx`)
-* **팀 소개**: 개발 팀원 프로필 및 프로젝트 기획 의도 서술.
+* **서비스 소개**: OdiMedi 서비스의 목적과 필요성 설명.
+* **연락처**: 문의 가능한 이메일 및 전화번호 정보.
 
 ---
 
 ## 5. 프로젝트 디렉토리 구조 (Directory Structure)
 
 ```bash
-#초안
-
 my-project/
 ├── public/
-│   ├── data/                  # JSON 데이터 (DB 대체용)
-│   └── images/                # 정적 이미지 리소스
+│   └── data/                  # 병원 현황 JSON 데이터
 ├── app/
-│   ├── layout.tsx             # Root Layout (Navbar, Footer)
-│   ├── page.tsx               # Main Page
+│   ├── layout.tsx             # Root Layout 
+│   ├── page.tsx               # Root Page (Redirect to /index)
+│   ├── index/                 # Main Page
+│   │   └── page.tsx
 │   ├── about/                 # About Page
 │   │   └── page.tsx
 │   ├── dashboard/             # Dashboard Page
-│   │   ├── page.tsx
-│   │   ├── loading.tsx        # 로딩 UI
-│   │   └── error.tsx          # 에러 UI
-│   ├── detail/                # 통합 상세 페이지 (증상/백신)
-│   │   └── [id]/              # [SSG] 동적 라우팅
+│   │   └── page.tsx
+│   ├── detail/                # 상세 증상 페이지
+│   │   ├── page.tsx           # 증상 검색 및 목록
+│   │   └── [id]/              # 증상 상세 정보
 │   │       └── page.tsx
-│   └── hospitals/             # 병원 상세 페이지
-│       └── [id]/              # [SSG] 병원 정보 + 댓글
+│   └── hospitals/             # 병원 정보 페이지
+│       ├── page.tsx           # 병원 목록 및 검색
+│       └── [id]/              # 병원 상세 정보 + 댓글
 │           └── page.tsx
-├── components/                # 재사용 컴포넌트 (Navbar, Cards, Charts...)
-├── lib/                       # 데이터 처리 유틸리티 (Fetch, Filter)
-├── types/                     # TypeScript 인터페이스 정의
+├── components/                # 재사용 컴포넌트
+│   ├── ui/                    # 기본 UI 컴포넌트 
+│   ├── Comments.tsx           # Giscus 댓글 컴포넌트
+│   ├── HospitalSearch.tsx     # 병원 검색 컴포넌트
+│   ├── MainContent.tsx        # 메인 페이지 콘텐츠
+│   ├── NavBar.tsx             # 네비게이션 바
+│   ├── SiteFooter.tsx         # 사이트 푸터
+│   ├── SiteHeader.tsx         # 사이트 헤더
+│   └── SymptomSearch.tsx      # 증상 검색 컴포넌트
+├── lib/                       # 데이터 처리 유틸리티
+│   ├── hospitals.ts           # 병원 데이터 처리
+│   ├── symptoms.ts            # 증상 데이터 정의
+│   └── utils/                 # 기타 유틸리티
 └── tailwind.config.ts         # 스타일 설정

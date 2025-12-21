@@ -1,0 +1,15 @@
+<script src="https://giscus.app/client.js"
+        data-repo="RainDrop3/OdiMedi"
+        data-repo-id="R_kgDOQdzhzw"
+        data-category="comment"
+        data-category-id="DIC_kwDOQdzhz84C0DrI"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ko"
+        crossorigin="anonymous"
+        async>
+</script>
