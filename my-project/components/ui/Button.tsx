@@ -11,6 +11,7 @@ interface ButtonProps {
   fullWidth?: boolean;
   className?: string;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 const variantStyles: Record<NonNullable<ButtonProps["variant"]>, string> = {
@@ -35,16 +36,18 @@ export default function Button({
   fullWidth = false,
   className,
   type = "button",
+  disabled,
 }: ButtonProps) {
   const classes = cn(
     "inline-flex items-center justify-center rounded-lg font-medium transition-colors cursor-pointer",
     variantStyles[variant],
     sizeStyles[size],
     fullWidth && "w-full",
+    disabled && "opacity-50 cursor-not-allowed",
     className
   );
 
-  if (href) {
+  if (href && !disabled) {
     return (
       <Link href={href} className={classes}>
         {children}
@@ -53,7 +56,7 @@ export default function Button({
   }
 
   return (
-    <button type={type} onClick={onClick} className={classes}>
+    <button type={type} onClick={onClick} className={classes} disabled={disabled}>
       {children}
     </button>
   );
