@@ -92,7 +92,7 @@ export default function HospitalSearch({ hospitals }: HospitalSearchProps) {
   }, [wrapperRef]);
 
   const handleSuggestionClick = (hospitalName: string) => {
-    router.push(`/hospitals/${hospitalName}`);
+    router.push(`/hospitals/${encodeURIComponent(hospitalName)}`);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -188,7 +188,7 @@ export default function HospitalSearch({ hospitals }: HospitalSearchProps) {
           >
             <div 
               className="flex-1 cursor-pointer"
-              onClick={() => router.push(`/hospitals/${hospital.의료기관명}`)}
+              onClick={() => router.push(`/hospitals/${encodeURIComponent(hospital.의료기관명)}`)}
             >
               <div className="flex items-center gap-3 mb-1">
                 <h3 className="text-lg font-bold text-[#0d171b] dark:text-slate-50 hover:text-primary transition-colors">
@@ -212,7 +212,7 @@ export default function HospitalSearch({ hospitals }: HospitalSearchProps) {
               </div>
             </div>
             <Button 
-              onClick={() => router.push(`/hospitals/${hospital.의료기관명}`)}
+              onClick={() => router.push(`/hospitals/${encodeURIComponent(hospital.의료기관명)}`)}
               variant="outline" 
               size="sm"
             >

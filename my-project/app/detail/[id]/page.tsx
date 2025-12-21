@@ -17,7 +17,7 @@ interface PageProps {
 
 export async function generateStaticParams() {
   return symptomsList.map((symptom) => ({
-    id: symptom.id,
+    id: encodeURIComponent(symptom.id),
   }));
 }
 

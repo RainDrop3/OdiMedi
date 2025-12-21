@@ -19,7 +19,7 @@ interface PageProps {
 export async function generateStaticParams() {
   const hospitals = await getAllHospitals();
   return hospitals.map((hospital) => ({
-    id: hospital.의료기관명,
+    id: encodeURIComponent(hospital.의료기관명),
   }));
 }
 
