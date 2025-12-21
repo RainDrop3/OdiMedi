@@ -31,7 +31,7 @@ export default function DashboardError({ error, reset }: ErrorProps) {
 					다시 시도하기
 				</button>
 				<a
-					href="/index"
+					href="/"
 					className="rounded-lg border border-slate-200 px-5 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
 				>
 					메인으로 이동

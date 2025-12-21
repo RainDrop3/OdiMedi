@@ -44,7 +44,7 @@
 * **Header**: 서비스 로고 (Home 링크), 네비게이션 메뉴(`[병원정보]`, `[내 주변]`, `[상세증상]`, `[소개]`).
 * **Footer**: 저작권 표시, 서비스 소개 링크.
 
-### 1. 메인 페이지 (`app/index/page.tsx`)
+### 1. 메인 페이지 (`app/page.tsx`)
 * **증상 선택 섹션**: "현재 증상을 입력하세요" 문구와 함께 주요 증상을 선택할 수 있는 UI 제공.
 * **기능**: 증상 선택 시 관련 진료과를 추천하고, 해당 진료과 병원 찾기 페이지로 이동 가능.
 
@@ -79,9 +79,7 @@ my-project/
 │   └── data/                  # 병원 현황 JSON 데이터
 ├── app/
 │   ├── layout.tsx             # Root Layout 
-│   ├── page.tsx               # Root Page (Redirect to /index)
-│   ├── index/                 # Main Page
-│   │   └── page.tsx
+│   ├── page.tsx               # Main Page
 │   ├── about/                 # About Page
 │   │   └── page.tsx
 │   ├── dashboard/             # Dashboard Page
