@@ -957,6 +957,15 @@ export function getSymptomById(id: string): SymptomDetail | undefined {
   return symptomsList.find(s => s.id === decodeURIComponent(id));
 }
 
+export function getSymptomByRouteId(routeId: string): SymptomDetail | undefined {
+  const index = Number(routeId);
+  if (!Number.isInteger(index) || index < 0 || index >= symptomsList.length) {
+    return undefined;
+  }
+
+  return symptomsList[index];
+}
+
 export function searchSymptoms(query: string): SymptomDetail[] {
   const lowerQuery = query.toLowerCase();
   return symptomsList.filter(s => 

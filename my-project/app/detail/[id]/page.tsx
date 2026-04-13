@@ -1,4 +1,4 @@
-import { getSymptomById, symptomsList } from "@/lib/symptoms";
+import { getSymptomByRouteId, symptomsList } from "@/lib/symptoms";
 import SiteHeader from "@/components/SiteHeader";
 import type { NavItem } from "@/components/NavBar";
 import Button from "@/components/ui/Button";
@@ -16,14 +16,13 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return symptomsList.map((symptom) => ({
-    id: encodeURIComponent(symptom.id),
+  return symptomsList.map((_, index) => ({
+    id: String(index),
   }));
 }
-//asdfasdf
 export default async function SymptomDetailPage({ params }: PageProps) {
   const { id } = await params;
-  const symptom = getSymptomById(id);
+  const symptom = getSymptomByRouteId(id);
 
   if (!symptom) {
     notFound();

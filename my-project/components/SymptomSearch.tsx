@@ -40,11 +40,14 @@ export default function SymptomSearch() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredSymptoms.map((symptom) => (
+        {filteredSymptoms.map((symptom) => {
+          const symptomIndex = symptomsList.findIndex((item) => item.id === symptom.id);
+
+          return (
           <Card 
             key={symptom.id}
             className="cursor-pointer hover:shadow-md transition-all hover:border-primary/50 group bg-slate-100 dark:bg-slate-800 border-none"
-            onClick={() => router.push(`/detail/${encodeURIComponent(symptom.id)}`)}
+            onClick={() => router.push(`/detail/${symptomIndex}`)}
           >
             <div className="flex flex-col h-full">
               <div className="flex justify-between items-start mb-2">
@@ -60,7 +63,8 @@ export default function SymptomSearch() {
               </p>
             </div>
           </Card>
-        ))}
+          );
+        })}
       </div>
       
       {filteredSymptoms.length === 0 && (
